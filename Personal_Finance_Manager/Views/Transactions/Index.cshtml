@@ -1,0 +1,94 @@
+﻿@model TransactionViewModel
+
+@{
+    ViewData["Title"] = "Transactions";
+
+    var transactionCategories = Model.Transactions.Select(t => t.Category).ToList();
+    var categoryNames = Model.Categories.Select(c => c.Name).ToList();
+    var everyCategory = categoryNames.Concat(transactionCategories).Distinct().ToList();
+}
+
+<h2>Transaction list:</h2>
+
+<div class="row flex-nowrap">
+    <div class="col-md-4">
+        <div class="form-group">
+            <form asp-action="Filter" method="get" autocomplete="off">
+                <div class="select-wrapper">
+                    @if (everyCategory.Any())
+                    {
+                        <select class="form-control" name="tCategory" placeholder="Select Category" onchange="this.form.submit()">
+                            <option value="" disabled selected hidden>Select Category</option>
+                            @foreach (var category in everyCategory)
+                            {
+                                <option value="@category">@category</option>
+                            }
+                        </select>
+                        <noscript>
+                            <input type="submit" value="Submit">
+                        </noscript>
+                    }
+                    else
+                    {
+                        <select class="form-control" disabled>
+                            <option value="">No categories available</option>
+                        </select>
+                    }
+                    <span class="arrow-down">&#9660;</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Transactions) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date, "_DateDisplay")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<p>
+    <a asp-action="Create" class="btn btn-success">Add New</a>
+</p>

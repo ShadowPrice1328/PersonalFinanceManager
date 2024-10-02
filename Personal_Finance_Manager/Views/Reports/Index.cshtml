@@ -1,0 +1,63 @@
+﻿@model ReportViewModel
+
+@{
+    ViewData["Title"] = "Report Generator";
+}
+
+<h1>Report Generator</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Generate" autocomplete="off" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstDate" class="control-label">From</label>
+                <input asp-for="FirstDate" type="date" max="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" required />
+                <span asp-validation-for="FirstDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastDate" class="control-label">To</label>
+                <input asp-for="LastDate" type="date" max="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" required />
+                <span asp-validation-for="LastDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Type" class="control-label"></label>
+                <div class="select-wrapper">
+                    <select asp-for="Type" class="form-control">
+                        <option value="Expense" selected>Expense</option>
+                        <option value="Revenue">Revenue</option>
+                    </select>
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                    <span class="arrow-down">&#9660;</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label text-muted">Category (optional)</label>
+                <div class="select-wrapper">
+                    @if (Model.Categories.Any())
+                    {
+                        <select class="form-control" name="Category" placeholder="Select Category">
+                            <option value="" selected></option>
+                            @foreach (var category in Model.Categories)
+                            {
+                                <option value="@category.Name">@category.Name</option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <select class="form-control" disabled>
+                            <option value="">No categories available</option>
+                        </select>
+                    }
+                    <span class="arrow-down">&#9660;</span>
+                    <span asp-validation-for="Category" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Generate" class="btn btn-primary" />
+                <input type="submit" value="Day-by-Day" class="btn btn-success" formaction="/Reports/DayByDay" formmethod="post"/>
+            </div>
+        </form>
+    </div>
+</div>
