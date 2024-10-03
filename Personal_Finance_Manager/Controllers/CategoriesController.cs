@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Personal_Finance_Manager.Data;
-using Personal_Finance_Manager.Models;
-using Personal_Finance_Manager.Services;
+using ServiceContracts;
 
 namespace Personal_Finance_Manager.Controllers
 {

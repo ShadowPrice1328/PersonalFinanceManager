@@ -14,18 +14,6 @@ namespace Personal_Finance_Manager.Services
         {
             _appDbContext = appDbContext;
         }
-        public string SerializeToJson<T>(List<T> data)
-        {
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
-            };
-
-            options.Converters.Add(new JsonDateTimeConverter("yyyy-MM-dd"));
-
-            return JsonSerializer.Serialize(data, options);
-        }
 
         public IEnumerable<Category> GetCategories()
         {

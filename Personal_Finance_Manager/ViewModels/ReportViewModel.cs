@@ -1,11 +1,11 @@
-﻿using Personal_Finance_Manager.Models;
+﻿using ServiceContracts.DTO;
 
 namespace Personal_Finance_Manager.ViewModels
 {
     public class ReportViewModel
     {
-        public IEnumerable<Transaction>? Transactions { get; set; }
-        public IEnumerable<Category>? Categories { get; set; }
+        public IEnumerable<TransactionResponse>? Transactions { get; set; }
+        public IEnumerable<CategoryResponse>? Categories { get; set; }
         public DateTime? FirstDate { get; set; }
         public DateTime LastDate { get; set; }
         public string Type { get; set; }

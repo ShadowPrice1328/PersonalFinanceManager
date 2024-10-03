@@ -1,5 +1,5 @@
-﻿using Personal_Finance_Manager.Models;
-
+﻿using ServiceContracts.DTO;
+    
 namespace Personal_Finance_Manager.ViewModels
 {
     internal class ReportWithoutCategoryViewModel
@@ -7,7 +7,7 @@ namespace Personal_Finance_Manager.ViewModels
         public DateTime FirstDate { get; set; }
         public DateTime LastDate { get; set; }
         public string Type { get; set; }
-        public List<Transaction> AllTransactions { get; set; }
+        public List<TransactionResponse> AllTransactions { get; set; }
         public Dictionary<string, decimal> CategoryCosts { get; set; }
         public decimal TotalCost { get; set; }
     }

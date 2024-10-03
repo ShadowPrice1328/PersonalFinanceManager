@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
-using Personal_Finance_Manager.Data;
+using Personal_Finance_Manager.ViewModels;
+using Services.Data;
 using System.Diagnostics;
 
 namespace Personal_Finance_Manager.Controllers

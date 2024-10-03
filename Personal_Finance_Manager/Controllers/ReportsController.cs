@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Personal_Finance_Manager.Data;
-using Personal_Finance_Manager.Models;
+using ServiceContracts;
 using Personal_Finance_Manager.ViewModels;
 using System;
 using System.Collections.Generic;
