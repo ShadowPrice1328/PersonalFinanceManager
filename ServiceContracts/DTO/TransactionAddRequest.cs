@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities;
 
 namespace ServiceContracts.DTO
 {
@@ -23,5 +24,18 @@ namespace ServiceContracts.DTO
         [Required(ErrorMessage = "Date cannot be blank.")]
         public DateTime Date { get; set; }
         public string? Description { get; set; }
+        
+        public Transaction ToTransaction()
+        {
+            return new Transaction()
+            {
+                Id = Guid.NewGuid(),
+                Category = Category,
+                Cost = Cost,
+                Date = Date,
+                Description = Description,
+                Type = Type.ToString()
+            };
+        }
     }
 }

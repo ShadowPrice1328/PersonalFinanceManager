@@ -20,7 +20,7 @@ namespace ServiceContracts
         /// </summary>
         /// <param name="transactionId">Id of transaction to get</param>
         /// <returns>TransactionResponse with all the information about selected transaction</returns>
-        TransactionResponse GetTransactionByTransactionId(Guid? transactionId);
+        TransactionResponse? GetTransactionByTransactionId(Guid? transactionId);
 
         /// <summary>
         /// Adds transaction to database
