@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Anna\\development\\projects\\PFM\\Entities\\Entities.csproj",
+      "projectUniqueName": "C:\\Users\\Anna\\development\\projects\\PFM\\Models\\Entities.csproj",
       "projectName": "Entities",
-      "projectPath": "C:\\Users\\Anna\\development\\projects\\PFM\\Entities\\Entities.csproj",
+      "projectPath": "C:\\Users\\Anna\\development\\projects\\PFM\\Models\\Entities.csproj",
       "packagesPath": "C:\\Users\\Anna\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Anna\\development\\projects\\PFM\\Entities\\obj\\",
+      "outputPath": "C:\\Users\\Anna\\development\\projects\\PFM\\Models\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Anna\\AppData\\Roaming\\NuGet\\NuGet.Config",
