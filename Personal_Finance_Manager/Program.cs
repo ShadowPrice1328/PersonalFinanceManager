@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Personal_Finance_Manager;
 using Personal_Finance_Manager.Converters;
-using Personal_Finance_Manager.Data;
-using Personal_Finance_Manager.Services;
 using ServiceContracts;
 using Services;
+using Services.Data;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,8 +17,13 @@ builder.Services.AddControllersWithViews()
         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     });
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySQL("server=127.0.0.1;user=root;password=Grace1608;database=pfm;"));
+builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("ConnectionString"));
+
+builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
+{
+    var dbSettings = serviceProvider.GetRequiredService<IOptions<DatabaseSettings>>().Value;
+    options.UseMySQL($"server=127.0.0.1;user={dbSettings.User};password={dbSettings.Password};database={dbSettings.Database};");
+});
 
 builder.Services.AddSingleton<ICategoriesService, CategoriesService>();
 builder.Services.AddSingleton<ITransactionsService, TransactionsService>();
