@@ -37,5 +37,13 @@ namespace ServiceContracts
         /// <param name="guid">Id of category to remove</param>
         /// <returns>True if success, false if error has occured</returns>
         bool DeleteCategory(Guid? guid);
+
+        /// <summary>
+        /// Retrives all categories that match filter parameters
+        /// </summary>
+        /// <param name="filterBy"></param>
+        /// <param name="filterString"></param>
+        /// <returns>A list of filtered CategoryResponses</returns>
+        List<CategoryResponse> GetFilteredCategories(string filterBy, string? filterString);
     }
 }

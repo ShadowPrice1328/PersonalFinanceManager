@@ -63,6 +63,34 @@ namespace Services
             return _categories.FirstOrDefault(c => c.Id == categoryId)?.ToCategoryResponse() ?? null;
         }
 
+        public List<CategoryResponse> GetFilteredCategories(string filterBy, string? filterString)
+        {
+            List<CategoryResponse> allCategories = GetCategories();
+            List<CategoryResponse> filteredCategories = allCategories;
+
+            if (string.IsNullOrEmpty(filterBy) || string.IsNullOrEmpty(filterString))
+                return filteredCategories;
+
+            switch(filterBy)
+            {
+                case nameof(Category.Name):
+                    filteredCategories = allCategories.Where(c => string.IsNullOrEmpty(c.Name) ||
+                    c.Name.StartsWith(filterString, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+                    break;
+
+                case nameof(Category.Description):
+                    filteredCategories = allCategories.Where(c => string.IsNullOrEmpty(c.Name) ||
+                    c.Name.Contains(filterString, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+                    break;
+
+                default: return filteredCategories; break;
+            }
+
+            return filteredCategories;
+        }
+
         public CategoryResponse UpdateCategory(CategoryUpdateRequest request)
         {
             if (request == null) throw new ArgumentNullException(nameof(CategoryUpdateRequest));

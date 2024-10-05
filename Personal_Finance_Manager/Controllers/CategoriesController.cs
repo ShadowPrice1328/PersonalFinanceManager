@@ -1,23 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Personal_Finance_Manager.Data;
 using ServiceContracts;
+using ServiceContracts.DTO;
+using Services.Data;
 
 namespace Personal_Finance_Manager.Controllers
 {
     public class CategoriesController : Controller
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IDatabaseService _databaseService;
+        private readonly ICategoriesService _categoriesService;
 
-        public CategoriesController(AppDbContext appDbContext)
+        public CategoriesController(ICategoriesService categoriesService, IDatabaseService databaseService)
         {
-            _appDbContext = appDbContext;
+            //_appDbContext = appDbContext;
+            _databaseService = databaseService;
+            _categoriesService = categoriesService;
         }
 
         // Returning to Index if problem with connection
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            if (!_appDbContext.Database.CanConnect())
+            if (!_databaseService.CanConnect().IsConnected)
             {
                 context.Result = RedirectToAction("Index", "Home");
             }
@@ -27,33 +32,28 @@ namespace Personal_Finance_Manager.Controllers
 
         public IActionResult Index()
         {
-            var allCategories = _appDbContext.Categories.ToList();
+            var allCategories = _categoriesService.GetCategories();
+
             return View(allCategories);
         }
 
-        public IActionResult Search(string cName)
+        [Route("[controller]/search/{categoryName}")]
+        public IActionResult Search(string categoryName)
         {
-            // If searchbox isn't empty then starts searching
-            if (!string.IsNullOrEmpty(cName))
+            if (!string.IsNullOrEmpty(categoryName))
             {
-                cName = cName.Trim().ToLower();
+                categoryName = categoryName.Trim().ToLower();
 
-                var searchResults = _appDbContext.Categories
-                    .Where(c => c.Name.ToLower().StartsWith(cName))
-                    .ToList();
+                var searchResults = _categoriesService.GetFilteredCategories(nameof(CategoryResponse.Name), categoryName);
 
                 if (searchResults.Count != 0)
-                {
                     TempData["AfterSearch"] = true;
-                    return View("Index", searchResults);
-                }
                 else
-                {
                     TempData["Message"] = "Nothing found!";
-                }
+
+                return PartialView("_CategoriesPartial", searchResults);
             }
 
-            // If searchbox is empty -> updates the page
             return RedirectToAction("Index");
         }
 
@@ -64,12 +64,11 @@ namespace Personal_Finance_Manager.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Category model)
+        public ActionResult Create(CategoryAddRequest request)
         {
             if (ModelState.IsValid)
             {
-                _appDbContext.Categories.Add(model);
-                _appDbContext.SaveChanges();
+                _categoriesService.AddCategory(request);
 
                 return RedirectToAction("Index");
             }
@@ -78,68 +77,40 @@ namespace Personal_Finance_Manager.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(int Id)
+        public ActionResult Edit(Guid id)
         {
-            // Selecting needed category and transfering to POST
-            var data = _appDbContext.Categories.FirstOrDefault(x => x.Id == Id);
-            return View(data);
+            var selectedCategory = _categoriesService.GetCategoryByCategoryId(id);
+
+            return View(selectedCategory);
         }
 
         [HttpPost]
-        public ActionResult Edit(Category model)
+        public ActionResult Edit(CategoryUpdateRequest request)
         {
-            // Selecting needed category
-            var data = _appDbContext.Categories.FirstOrDefault(x => x.Id == model.Id);
-
-            // If exists in Database:
-            if (data != null)
-            {
-                // Looking for transaction with this Category
-                var relatedTransactions = _appDbContext.Transactions
-                .Where(t => t.Category == data.Name)
-                .ToList();
-
-                // Editing values
-                data.Name = model.Name;
-                data.Description = model.Description;
-
-                // If transactions exist:
-                if (relatedTransactions != null)
-                {
-                    foreach (var transaction in relatedTransactions)
-                    {
-                        // Change their category
-                        transaction.Category = model.Name;
-                    }
-                }
-
-                _appDbContext.SaveChanges();
-            }
+            _categoriesService.UpdateCategory(request);
 
             return RedirectToAction("Index");
         }
 
-        public ActionResult Details(int Id)
+        public ActionResult Details(Guid id)
         {
-            // Selecting needed category
-            var data = _appDbContext.Categories.FirstOrDefault(x => x.Id == Id);
-            return View(data);
+            var selectedCategory = _categoriesService.GetCategoryByCategoryId(id);
+
+            return View(selectedCategory);
         }
 
         [HttpGet]
-        public ActionResult Delete(int Id)
+        public ActionResult Delete(Guid id)
         {
-            // Selecting needed category and transfering to POST
-            var model = _appDbContext.Categories.FirstOrDefault(x => x.Id == Id);
-            return View(model);
+            var selectedCategory = _categoriesService.GetCategoryByCategoryId(id);
+
+            return View(selectedCategory);
         }
 
         [HttpPost]
-        public ActionResult Delete(Category model)
+        public ActionResult DeleteConfirm(Guid id)
         {
-            // Removing selected in [HttpGet] category
-            _appDbContext.Categories.Remove(model);
-            _appDbContext.SaveChanges();
+            _categoriesService.DeleteCategory(id);
 
             return RedirectToAction("Index");
         }

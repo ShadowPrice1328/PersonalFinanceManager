@@ -9,13 +9,11 @@
 <div class="row flex-nowrap">
 
     <div class="col-md-4">
-        <form asp-action="Search" autocomplete="off">
-            <div class="form-group d-flex">
-                <input type="text" name="cName" class="form-control mr-2" placeholder="Enter a name of category..." />
-                <div style="width: 8px;"></div>
-                <button type="submit" class="btn btn-primary">Search</button>
-            </div>
-        </form>
+        <div class="form-group d-flex">
+            <input type="text" name="categoryName" id="search-field" class="form-control mr-2" placeholder="Enter a name of category..." />
+            <div style="width: 8px;"></div>
+            <button id="search-button" class="btn btn-primary">Search</button>
+        </div>
     </div>
 
     <div class="col-md-8 d-flex align-items-center">
@@ -39,7 +37,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="categories-body">
             @foreach (var item in Model)
             {
                 <tr>
@@ -67,3 +65,5 @@
         }
     </p>
 </div>
+
+<script src="~/js/categories.js"></script>
