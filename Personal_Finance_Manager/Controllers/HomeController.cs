@@ -20,38 +20,42 @@ namespace Personal_Finance_Manager.Controllers
 
         public IActionResult Index()
         {
+            var viewModel = new HomeViewModel();
+
             // Checking Database connections
             try
             {
                 using (_appDbContext.Database.GetDbConnection())
                 {
                     _appDbContext.Database.OpenConnection();
-                    var isConnected = _appDbContext.Database.CanConnect();
+                    viewModel.IsConnected = _appDbContext.Database.CanConnect();
                     _appDbContext.Database.CloseConnection();
 
                     // Showing a message about connection status
-                    if (isConnected)
+                    if (viewModel.IsConnected)
                     {
-                        ViewBag.ConnectionStatus = $"Connected to [{_appDbContext.Database.GetDbConnection().Database}] database!";
-                        ViewBag.ConnectionStatusColor = "text-done";
+                        string databaseName = _appDbContext.Database.GetDbConnection().Database;
 
-                        return View(_appDbContext);
+                        viewModel.ConnectionStatus = $"Connected to [{databaseName}] database!";
+                        viewModel.ConnectionStatusColor = "text-done";
+                        viewModel.Categories = _appDbContext.Categories.ToList();
+                        viewModel.TransactionCount = _appDbContext.Transactions.Count();
                     }
                     else
                     {
-                        ViewBag.ConnectionStatus = "Not Connected!";
-                        ViewBag.ConnectionStatusColor = "text-warning";
+                        viewModel.ConnectionStatus = "Not Connected!";
+                        viewModel.ConnectionStatusColor = "text-warning";
                     }
                 }
             }
             catch (Exception ex)
             {
-                ViewBag.ConnectionStatus = "Connection error!";
-                ViewBag.Desc = ex.Message;
-                ViewBag.ConnectionStatusColor = "text-danger";
+                viewModel.ConnectionStatus = "Connection error!";
+                viewModel.ErrorMessage = ex.Message;
+                viewModel.ConnectionStatusColor = "text-danger";
             }
 
-            return View();
+            return View(viewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
