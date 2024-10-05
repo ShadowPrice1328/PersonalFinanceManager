@@ -2,19 +2,16 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using ServiceContracts;
 using ServiceContracts.DTO;
-using Services.Data;
 
 namespace Personal_Finance_Manager.Controllers
 {
     public class CategoriesController : Controller
     {
-        private readonly AppDbContext _appDbContext;
         private readonly IDatabaseService _databaseService;
         private readonly ICategoriesService _categoriesService;
 
         public CategoriesController(ICategoriesService categoriesService, IDatabaseService databaseService)
         {
-            //_appDbContext = appDbContext;
             _databaseService = databaseService;
             _categoriesService = categoriesService;
         }

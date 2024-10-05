@@ -1,23 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Personal_Finance_Manager.Data;
+using Services.Data;
 using ServiceContracts.DTO;
+using ServiceContracts;
 
 namespace Personal_Finance_Manager.Controllers
 {
     public class TransactionsController : Controller
     {
         private readonly AppDbContext _appDbContext;
-
-        public TransactionsController(AppDbContext appDbContext)
+        private readonly IDatabaseService _databaseService; 
+        public TransactionsController(AppDbContext appDbContext, IDatabaseService databaseService)
         {
             _appDbContext = appDbContext;
+            _databaseService = databaseService;
         }
-
-        // Returning to Index if problem with connection
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            if (!_appDbContext.Database.CanConnect())
+            if (!_databaseService.CanConnect().IsConnected)
             {
                 context.Result = RedirectToAction("Index", "Home");
             }
