@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 using Personal_Finance_Manager.ViewModels;
+using ServiceContracts;
+using Services;
 using Services.Data;
 using System.Diagnostics;
 
@@ -11,47 +13,37 @@ namespace Personal_Finance_Manager.Controllers
 	{
 		private readonly ILogger<HomeController> _logger;
         private readonly AppDbContext _appDbContext;
+        private readonly IDatabaseService _databaseService;
+        private readonly ICategoriesService _categoriesService;
 
-		public HomeController(ILogger<HomeController> logger, AppDbContext appDbContext)
+		public HomeController(ILogger<HomeController> logger, AppDbContext appDbContext, IDatabaseService databaseService,
+                                ICategoriesService categoriesService)
 		{
             _appDbContext = appDbContext;
 			_logger = logger;
+            _databaseService = databaseService;
+            _categoriesService = categoriesService;
 		}
 
         public IActionResult Index()
         {
             var viewModel = new HomeViewModel();
 
-            // Checking Database connections
-            try
+            var (IsConnected, ErrorMessage) = _databaseService.CanConnect();
+
+            if (IsConnected)
             {
-                using (_appDbContext.Database.GetDbConnection())
-                {
-                    _appDbContext.Database.OpenConnection();
-                    viewModel.IsConnected = _appDbContext.Database.CanConnect();
-                    _appDbContext.Database.CloseConnection();
+                string databaseName = _appDbContext.Database.GetDbConnection().Database;
 
-                    // Showing a message about connection status
-                    if (viewModel.IsConnected)
-                    {
-                        string databaseName = _appDbContext.Database.GetDbConnection().Database;
-
-                        viewModel.ConnectionStatus = $"Connected to [{databaseName}] database!";
-                        viewModel.ConnectionStatusColor = "text-done";
-                        viewModel.Categories = _appDbContext.Categories.ToList();
-                        viewModel.TransactionCount = _appDbContext.Transactions.Count();
-                    }
-                    else
-                    {
-                        viewModel.ConnectionStatus = "Not Connected!";
-                        viewModel.ConnectionStatusColor = "text-warning";
-                    }
-                }
+                viewModel.ConnectionStatus = $"Connected to [{databaseName}] database!";
+                viewModel.ConnectionStatusColor = "text-done";
+                viewModel.Categories = _categoriesService.GetCategories();
+                viewModel.TransactionCount = _appDbContext.Transactions.Count();
             }
-            catch (Exception ex)
+            else if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 viewModel.ConnectionStatus = "Connection error!";
-                viewModel.ErrorMessage = ex.Message;
+                viewModel.ErrorMessage = ErrorMessage;
                 viewModel.ConnectionStatusColor = "text-danger";
             }
 

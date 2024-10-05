@@ -1,4 +1,4 @@
-﻿@model AppDbContext
+﻿@model HomeViewModel
 
 @{
     ViewData["Title"] = "Home Page";
@@ -7,11 +7,13 @@
 <div class="container text-center mt-5">
     <div class="bg-light rounded p-3">
         <h1 class="display-4 text-black">Welcome to PFM</h1>
-        <p class="text-black">Database connection status: <span class="@ViewBag.ConnectionStatusColor">@ViewBag.ConnectionStatus</span></p>
+        <p class="text-black">Database connection status: 
+            <span class="@Model.ConnectionStatusColor">@Model.ConnectionStatus</span></p>
     </div>
-    @if (ViewBag.ConnectionStatus == "Connection error!")
+
+    @if (Model.ConnectionStatus == "Connection error!")
     {
-        <p class="mt-4"><span class="@ViewBag.ConnectionStatusColor"> @ViewBag.Desc</span></p>
+        <p class="mt-4"><span class="@Model.ConnectionStatusColor"> @Model.ErrorMessage</span></p>
     }
     else
     {
@@ -24,7 +26,7 @@
                     <p class="mb-1" style="font-size: 18px;">@category.Name</p>
                 }
 
-                <h2 class="mt-4">Number of transactions: <span class="text-primary">@Model.Transactions.Count()</span></h2>
+                <h2 class="mt-4">Number of transactions: <span class="text-primary">@Model.TransactionCount</span></h2>
             </div>
         </div>
     }
