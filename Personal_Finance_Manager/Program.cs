@@ -22,9 +22,10 @@ builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("C
 builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
 {
     var dbSettings = serviceProvider.GetRequiredService<IOptions<DatabaseSettings>>().Value;
-    options.UseMySQL($"server=127.0.0.1;user={dbSettings.User};password={dbSettings.Password};database={dbSettings.Database};");
+    options.UseMySQL($"server={dbSettings.Server};user={dbSettings.User};password={dbSettings.Password};database={dbSettings.Database};");
 });
 
+builder.Services.AddTransient<IDatabaseService, DatabaseService>();
 builder.Services.AddSingleton<ICategoriesService, CategoriesService>();
 builder.Services.AddSingleton<ITransactionsService, TransactionsService>();
 
