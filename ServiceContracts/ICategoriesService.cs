@@ -45,5 +45,11 @@ namespace ServiceContracts
         /// <param name="filterString"></param>
         /// <returns>A list of filtered CategoryResponses</returns>
         List<CategoryResponse> GetFilteredCategories(string filterBy, string? filterString);
+
+        /// <summary>
+        /// Retrives name of every category
+        /// </summary>
+        /// <returns>A list of category names</returns>
+        List<string?> GetCategoryNames();
     }
 }

@@ -46,6 +46,52 @@ namespace Services
             return true;
         }
 
+        public List<TransactionResponse> GetFilteredTransactions(string filterBy, string? filterString)
+        {
+            List<TransactionResponse> allTransactions = GetTransactions();
+            List<TransactionResponse> filteredTransactions = allTransactions;
+
+            if (string.IsNullOrEmpty(filterBy) || string.IsNullOrEmpty(filterString))
+                return filteredTransactions;
+
+            switch (filterBy)
+            {
+                case nameof(Transaction.Category):
+                    filteredTransactions = allTransactions.Where(t => string.IsNullOrEmpty(t.Category) ||
+                    t.Category == filterString)
+                    .ToList();
+                    break;
+
+                case nameof(Transaction.Description):
+                    filteredTransactions = allTransactions.Where(t => string.IsNullOrEmpty(t.Description) ||
+                    t.Description == filterString)
+                    .ToList();
+                    break;
+
+                case nameof(Transaction.Type):
+                    filteredTransactions = allTransactions.Where(t => string.IsNullOrEmpty(t.Type) ||
+                    t.Type == filterString)
+                    .ToList();
+                    break;
+
+                case nameof(Transaction.Cost):
+                    filteredTransactions = allTransactions.Where(t => string.IsNullOrEmpty(t.Cost.ToString()) ||
+                    t.Cost == Convert.ToDecimal(filterString))
+                    .ToList();
+                    break;
+
+                case nameof(Transaction.Date):
+                    filteredTransactions = allTransactions.Where(t => string.IsNullOrEmpty(t.Date.ToString()) ||
+                    t.Date == DateTime.Parse(filterString))
+                    .ToList();
+                    break;
+
+                default: filteredTransactions = allTransactions; break;
+            }
+
+            return filteredTransactions;
+        }
+
         public TransactionResponse? GetTransactionByTransactionId(Guid? transactionId)
         {
             if (!transactionId.HasValue) throw new ArgumentNullException(nameof(transactionId));

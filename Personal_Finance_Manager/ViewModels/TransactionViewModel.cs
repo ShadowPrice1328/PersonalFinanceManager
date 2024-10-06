@@ -1,13 +1,10 @@
-﻿using Personal_Finance_Manager.Models;
+﻿using ServiceContracts.DTO;
 
-public class TransactionViewModel
+namespace Personal_Finance_Manager.ViewModels
 {
-    public IEnumerable<Transaction>? Transactions { get ; set; }
-    public IEnumerable<Category>? Categories { get; set; }
-    public int Id { get; set; }
-    public string Category { get; set; }
-    public string Type { get; set; }
-    public decimal Cost { get; set; }
-    public DateTime Date { get; set; }
-    public string Description { get; set; }
+    public class TransactionViewModel
+    {
+        public List<TransactionResponse>? Transactions { get; set; }
+        public List<string?> CategoryNames { get; set; }
+    }
 }

@@ -3,17 +3,22 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Services.Data;
 using ServiceContracts.DTO;
 using ServiceContracts;
+using Personal_Finance_Manager.ViewModels;
+using Entities;
 
 namespace Personal_Finance_Manager.Controllers
 {
     public class TransactionsController : Controller
     {
-        private readonly AppDbContext _appDbContext;
         private readonly IDatabaseService _databaseService; 
-        public TransactionsController(AppDbContext appDbContext, IDatabaseService databaseService)
+        private readonly ITransactionsService _transactionsService;
+        private readonly ICategoriesService _categoriesService;
+
+        public TransactionsController(IDatabaseService databaseService, ITransactionsService transactionsService, ICategoriesService categoriesService)
         {
-            _appDbContext = appDbContext;
             _databaseService = databaseService;
+            _transactionsService = transactionsService;
+            _categoriesService = categoriesService;
         }
         public override void OnActionExecuting(ActionExecutingContext context)
         {
@@ -27,136 +32,84 @@ namespace Personal_Finance_Manager.Controllers
 
         public IActionResult Index()
         {
-            // Transfering all tables to Index
             var viewModel = new TransactionViewModel
             {
-                Transactions = _appDbContext.Transactions.ToList(),
-                Categories = _appDbContext.Categories.ToList()
+                Transactions = _transactionsService.GetTransactions(),
+                CategoryNames = _categoriesService.GetCategoryNames()
             };
+
             return View(viewModel);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            // Transfering all tables to the Create form
-            var viewModel = new TransactionViewModel
-            {
-                Transactions = _appDbContext.Transactions.ToList(),
-                Categories = _appDbContext.Categories.ToList()
-            };
-
-            return View(viewModel);
+            ViewData["CategoryNames"] = _categoriesService.GetCategoryNames();
+            return View();
         }
 
         [HttpPost]
-        public IActionResult Create(TransactionViewModel viewModel)
+        public IActionResult Create(TransactionAddRequest request)
         {
-            // Creates new transaction if model is valid
             if (ModelState.IsValid)
             {
-                var transaction = new Transaction
-                {
-                    Category = viewModel.Category,
-                    Type = viewModel.Type,
-                    Cost = viewModel.Cost,
-                    Date = viewModel.Date,
-                    Description = viewModel.Description
-                };
-
-                _appDbContext.Transactions.Add(transaction);
-                _appDbContext.SaveChanges();
+                _transactionsService.AddTransaction(request);
 
                 return RedirectToAction("Index");
             }
 
-            // If model is invalid it gives next try
-            viewModel.Categories = _appDbContext.Categories.ToList();
-            return View(viewModel);
+            return View();
         }
 
         [HttpGet]
-        public ActionResult Edit(int Id)
+        public ActionResult Edit(Guid Id)
         {
-            // Selecting needed transaction
-            var data = _appDbContext.Transactions.FirstOrDefault(x => x.Id == Id);
+            var selectedTransaction = _transactionsService.GetTransactionByTransactionId(Id);
 
-            // Transfering transaction's data to viewModel with tables included to POST
-            var viewModel = new TransactionViewModel
-            {
-                Id = data.Id,
-                Type = data.Type,
-                Cost = data.Cost,
-                Date = data.Date,
-                Description = data.Description,
-                Transactions = _appDbContext.Transactions.ToList(),
-                Categories = _appDbContext.Categories.ToList()
-            };
-
-            return View(viewModel);
+            ViewData["CategoryNames"] = _categoriesService.GetCategoryNames();
+            return View(selectedTransaction);
         }
 
         [HttpPost]
-        public IActionResult Edit(TransactionViewModel model)
+        public IActionResult Edit(TransactionUpdateRequest request)
         {
-            // Selecting needed transaction
-            var data = _appDbContext.Transactions.Where(x => x.Id == model.Id).FirstOrDefault();
+            _transactionsService.UpdateTransaction(request);
 
-            // If exists in Database:
-            if (data != null)
-            {
-                // Editing values
-                data.Category = model.Category;
-                data.Type = model.Type;
-                data.Cost = model.Cost;
-                data.Date = model.Date;
-                data.Description = model.Description;
-
-                _appDbContext.SaveChanges();
-            }
             return RedirectToAction("Index");
         }
-        public IActionResult Details(int Id)
+        public IActionResult Details(Guid Id)
         {
-            // Selecting needed transaction
-            var data = _appDbContext.Transactions.Where(x => x.Id == Id).FirstOrDefault();
-            return View(data);
+            var selectedTransaction = _transactionsService.GetTransactionByTransactionId(Id);
+
+            return View(selectedTransaction);
         }
         [HttpGet]
-        public IActionResult Delete(int Id)
+        public IActionResult Delete(Guid Id)
         {
-            // Selecting needed transaction and transfering to POST
-            Transaction? model = _appDbContext.Transactions.Where(x => x.Id == Id).FirstOrDefault();
-            return View(model);
+            TransactionResponse? transactionResponse = _transactionsService.GetTransactionByTransactionId(Id);
+
+            return View(transactionResponse);
         }
         [HttpPost]
-        public IActionResult Delete(Transaction model)
+        public IActionResult DeleteConfirm(Guid Id)
         {
-            // Removing selected in [HttpGet] transaction
-            _appDbContext.Transactions.Remove(model);
-            _appDbContext.SaveChanges();
+            _transactionsService.DeleteTransaction(Id);
 
             return RedirectToAction("Index");
         }
 
-        // Shows transaction from selected category
-        public IActionResult Filter(string tCategory)
+        [Route("[controller]/filter-by/{filterBy}/{filterString}")]
+        public IActionResult Filter(string filterBy, string filterString)
         {
             // If nothing is selected -> updates the page
-            if (tCategory == "Select Category")
+            if (filterBy != nameof(TransactionResponse.Category) && filterString != "Select Category")
             {
-                return RedirectToAction("Index");
+                var filterResult = _transactionsService.GetFilteredTransactions(filterBy, filterString);
+
+                return PartialView("_TransactionsPartial", filterResult);
             }
 
-            // If category is selected -> creates viewModel with all tables included
-            // and transfers it to Index page where all transactions will be displayes
-            var viewModel = new TransactionViewModel
-            {
-                Transactions = _appDbContext.Transactions.Where(t => t.Category == tCategory).ToList(),
-                Categories = _appDbContext.Categories.ToList()
-            };
-
-            return View("Index", viewModel);
+            return RedirectToAction("Index");
         }
 
     }

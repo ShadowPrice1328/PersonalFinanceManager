@@ -63,6 +63,11 @@ namespace Services
             return _categories.FirstOrDefault(c => c.Id == categoryId)?.ToCategoryResponse() ?? null;
         }
 
+        public List<string?> GetCategoryNames()
+        {
+            return _appDbContext.Categories.Select(c => c.Name).ToList();
+        }
+
         public List<CategoryResponse> GetFilteredCategories(string filterBy, string? filterString)
         {
             List<CategoryResponse> allCategories = GetCategories();
@@ -85,7 +90,7 @@ namespace Services
                     .ToList();
                     break;
 
-                default: return filteredCategories; break;
+                default: filteredCategories = allCategories; break;
             }
 
             return filteredCategories;

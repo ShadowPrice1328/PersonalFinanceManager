@@ -1,4 +1,4 @@
-﻿@model TransactionViewModel
+﻿@model TransactionResponse
 
 @{
     ViewData["Title"] = "Edit Transaction";
@@ -9,16 +9,16 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" autocomplete="off">
+        <form asp-action="Edit" autocomplete="off" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Category" class="control-label"></label>
                 <div class="select-wrapper">
                     <select asp-for="Category" class="form-control">
-                        @foreach (var category in Model.Categories.ToList())
+                        @foreach (var categoryName in (List<string>)ViewData["CategoryNames"])
                         {
-                            <option value="@category.Name">@category.Name</option>
+                            <option value="@categoryName">@categoryName</option>
                         }
                     </select>
                     <span class="arrow-down">&#9660;</span>
@@ -44,7 +44,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" type="date" max="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                <input asp-for="Date" type="date" max="@DateTime.Now.ToString("yyyy-MM-dd")" 
+                    class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">

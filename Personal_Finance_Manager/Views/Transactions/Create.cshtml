@@ -1,4 +1,4 @@
-﻿@model TransactionViewModel
+﻿@model TransactionAddRequest
 
 @{
     ViewData["Title"] = "Add Transaction";
@@ -13,12 +13,12 @@
             <div class="form-group">
                 <label asp-for="Category" class="control-label"></label>
                 <div class="select-wrapper">
-                    @if (Model.Categories.Any())
+                    @if (((List<string>)ViewData["CategoryNames"]).Any())
                     {
                         <select asp-for="Category" class="form-control">
-                            @foreach (var category in Model.Categories.ToList())
+                            @foreach (var categoryName in (List<string>)ViewData["CategoryNames"])
                             {
-                                <option value="@category.Name">@category.Name</option>
+                                <option value="@categoryName">@categoryName</option>
                             }
                         </select>
                     }
@@ -52,7 +52,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" type="date" max="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                <input asp-for="Date" type="date" max="@DateTime.Now.ToString("yyyy-MM-dd")" 
+                    class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -42,5 +42,13 @@ namespace ServiceContracts
         /// <param name="guid">Id of transaction to remove</param>
         /// <returns>True if success, false if error has occured</returns>
         bool DeleteTransaction(Guid? guid);
+
+        /// <summary>
+        /// Retrives all transactions that match filter parameters
+        /// </summary>
+        /// <param name="filterBy"></param>
+        /// <param name="filterString"></param>
+        /// <returns>A list of filtered TransactionResponses</returns>
+        List<TransactionResponse> GetFilteredTransactions(string filterBy, string? filterString);
     }
 }
