@@ -25,9 +25,10 @@ builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
     options.UseMySQL($"server={dbSettings.Server};user={dbSettings.User};password={dbSettings.Password};database={dbSettings.Database};");
 });
 
-builder.Services.AddTransient<IDatabaseService, DatabaseService>();
-builder.Services.AddSingleton<ICategoriesService, CategoriesService>();
-builder.Services.AddSingleton<ITransactionsService, TransactionsService>();
+builder.Services.AddScoped<IDatabaseService, DatabaseService>();
+builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+builder.Services.AddScoped<ITransactionsService, TransactionsService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 
 var app = builder.Build();
 

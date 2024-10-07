@@ -2,6 +2,6 @@
 {
     public enum TransactionTypeOptions
     {
-        Expence, Revenue
+        Expense, Revenue
     }
 }

@@ -13,10 +13,10 @@
             <div class="form-group">
                 <label asp-for="Category" class="control-label"></label>
                 <div class="select-wrapper">
-                    @if (((List<string>)ViewData["CategoryNames"]).Any())
+                    @if ((ViewBag.CategoryNames != null && ((List<string>)ViewBag.CategoryNames).Any()))
                     {
                         <select asp-for="Category" class="form-control">
-                            @foreach (var categoryName in (List<string>)ViewData["CategoryNames"])
+                            @foreach (var categoryName in (List<string>)ViewBag.CategoryNames)
                             {
                                 <option value="@categoryName">@categoryName</option>
                             }

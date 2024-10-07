@@ -16,7 +16,7 @@
                 <label asp-for="Category" class="control-label"></label>
                 <div class="select-wrapper">
                     <select asp-for="Category" class="form-control">
-                        @foreach (var categoryName in (List<string>)ViewData["CategoryNames"])
+                        @foreach (var categoryName in (List<string>)ViewBag.CategoryNames)
                         {
                             <option value="@categoryName">@categoryName</option>
                         }

@@ -11,6 +11,7 @@
         <div class="form-group">
             <div class="select-wrapper">
                 @if (Model.CategoryNames.Any())
+
                 {
                     <select class="form-control" id="category-selector" name="selectedCategory" placeholder="Select Category">
                         <option value="" disabled selected hidden>Select Category</option>
@@ -20,7 +21,9 @@
                         }
                     </select>
                 }
+
                 else
+
                 {
                     <select class="form-control" disabled>
                         <option value="">No categories available</option>
@@ -36,52 +39,56 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => typeof(TransactionResponse).GetProperty("Category"))
+                @Html.DisplayNameFor(model => model.Transactions.First().Category)
             </th>
             <th>
-                @Html.DisplayNameFor(model => typeof(TransactionResponse).GetProperty("Type"))
+                @Html.DisplayNameFor(model => model.Transactions.First().Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => typeof(TransactionResponse).GetProperty("Cost"))
+                @Html.DisplayNameFor(model => model.Transactions.First().Cost)
             </th>
             <th>
-                @Html.DisplayNameFor(model => typeof(TransactionResponse).GetProperty("Date"))
+                @Html.DisplayNameFor(model => model.Transactions.First().Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => typeof(TransactionResponse).GetProperty("Description"))
+                @Html.DisplayNameFor(model => model.Transactions.First().Description)
             </th>
             <th></th>
         </tr>
     </thead>
-    <tbody id="transaction-body">
-@foreach (var item in Model.Transactions) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date, "_DateDisplay")
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+    <tbody id="transactions-body">
+        @foreach (var item in Model.Transactions)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date, "_DateDisplay")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 <p>
     <a asp-action="Create" class="btn btn-success">Add New</a>
+    <span style="display:none" id="back-to-list">
+        <a href="/Transactions" class="btn btn-custom">Back to List</a>
+    </span>
 </p>
 
 <script src="js/transactions.js"></script>

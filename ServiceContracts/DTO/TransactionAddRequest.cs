@@ -18,7 +18,7 @@ namespace ServiceContracts.DTO
         public TransactionTypeOptions? Type { get; set; }
 
         [Required(ErrorMessage = "Cost cannot be blank.")]
-        [RegularExpression(@"/^\d*(\.|,|(\.\d{1,2})|(,\d{1,2}))?$/gm", ErrorMessage = "Invalid Cost.")]
+        [RegularExpression(@"^\d+([.,]\d{1,2})?$", ErrorMessage = "Invalid Cost.")]
         public decimal Cost { get; set; }
 
         [Required(ErrorMessage = "Date cannot be blank.")]

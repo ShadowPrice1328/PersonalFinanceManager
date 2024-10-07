@@ -1,7 +1,7 @@
-﻿@model ReportViewModel
+﻿@model GenerateReportRequest
 
 @{
-    ViewData["Title"] = "Report Generator";
+    ViewData["Title"] = "Reports Generator";
 }
 
 <h1>Report Generator</h1>
@@ -34,13 +34,14 @@
             <div class="form-group">
                 <label asp-for="Category" class="control-label text-muted">Category (optional)</label>
                 <div class="select-wrapper">
-                    @if (Model.Categories.Any())
+                    @if (((List<string>)ViewBag.CategoryNames).Any())
+
                     {
                         <select class="form-control" name="Category" placeholder="Select Category">
                             <option value="" selected></option>
-                            @foreach (var category in Model.Categories)
+                            @foreach (var categoryName in (List<string>)ViewBag.CategoryNames)
                             {
-                                <option value="@category.Name">@category.Name</option>
+                                <option value="@categoryName">@categoryName</option>
                             }
                         </select>
                     }
@@ -56,7 +57,7 @@
             </div>
             <div class="form-group mt-3">
                 <input type="submit" value="Generate" class="btn btn-primary" />
-                <input type="submit" value="Day-by-Day" class="btn btn-success" formaction="/Reports/DayByDay" formmethod="post"/>
+                <input type="submit" value="Day-by-Day" class="btn btn-success" formaction="/Reports/Graph" formmethod="post"/>
             </div>
         </form>
     </div>

@@ -45,7 +45,7 @@ namespace Services
             if (category == null)
                 return false;
 
-            _categories.Remove(category);
+            _appDbContext.Categories.Remove(category);
             _appDbContext.SaveChanges();
 
             return true;
@@ -65,8 +65,9 @@ namespace Services
 
         public List<string?> GetCategoryNames()
         {
-            return _appDbContext.Categories.Select(c => c.Name).ToList();
+            return _appDbContext.Categories.Select(c => c.Name).ToList() ?? new List<string>();
         }
+
 
         public List<CategoryResponse> GetFilteredCategories(string filterBy, string? filterString)
         {

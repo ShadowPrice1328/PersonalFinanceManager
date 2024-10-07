@@ -16,7 +16,6 @@ namespace Personal_Finance_Manager.Controllers
             _categoriesService = categoriesService;
         }
 
-        // Returning to Index if problem with connection
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             if (!_databaseService.CanConnect().IsConnected)
@@ -76,8 +75,13 @@ namespace Personal_Finance_Manager.Controllers
         [HttpGet]
         public ActionResult Edit(Guid id)
         {
-            var selectedCategory = _categoriesService.GetCategoryByCategoryId(id);
+            CategoryUpdateRequest? selectedCategory = _categoriesService.GetCategoryByCategoryId(id)?.ToUpdateRequest();
 
+            if (selectedCategory == null)
+            {
+                return NotFound();
+            }
+             
             return View(selectedCategory);
         }
 

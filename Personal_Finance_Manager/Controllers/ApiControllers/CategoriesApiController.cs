@@ -1,6 +1,7 @@
 ﻿using Entities;
 using Microsoft.AspNetCore.Mvc;
-using Personal_Finance_Manager.Services;
+using ServiceContracts;
+using ServiceContracts.DTO;
 
 namespace Personal_Finance_Manager.Controllers.ApiControllers
 {
@@ -8,25 +9,24 @@ namespace Personal_Finance_Manager.Controllers.ApiControllers
     [ApiController]
     public class CategoriesApiController : ControllerBase
     {
-        public CategoriesApiController(FinanceService financeService)
+        private readonly ICategoriesService _categoriesService;
+        public CategoriesApiController(ICategoriesService categoriesService)
         {
-            _financeService = financeService;
+            _categoriesService = categoriesService;
         }
-
-        private readonly FinanceService _financeService;
 
         [Route("get-all")]
         [HttpGet]
-        public IEnumerable<Category> GetCategories()
+        public List<CategoryResponse> GetCategories()
         {
-            return _financeService.GetCategories();
+            return _categoriesService.GetCategories();
         }
 
-        [Route("get-specific/{name}")]
+        [Route("get-specific/{id}")]
         [HttpGet]
-        public Category GetCategory(string name)
+        public CategoryResponse? GetCategory(Guid id)
         {
-            return _financeService.GetCategory(name);
+            return _categoriesService.GetCategoryByCategoryId(id);
         }
     }
 }

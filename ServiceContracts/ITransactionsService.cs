@@ -50,5 +50,13 @@ namespace ServiceContracts
         /// <param name="filterString"></param>
         /// <returns>A list of filtered TransactionResponses</returns>
         List<TransactionResponse> GetFilteredTransactions(string filterBy, string? filterString);
+
+        /// <summary>
+        /// Retrives all transaction made between two dates
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns>A list of selected TransactionRepsponses</returns>
+        List<TransactionResponse> GetTransactionBetweenTwoDates(DateTime? startDate, DateTime? endDate);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Personal_Finance_Manager.Services;
 using Entities;
+using ServiceContracts;
+using ServiceContracts.DTO;
 
 namespace Personal_Finance_Manager.Controllers.ApiControllers
 {
@@ -8,18 +9,17 @@ namespace Personal_Finance_Manager.Controllers.ApiControllers
     [Route("api/[controller]")]
     public class TransactionsApiController
     {
-        public TransactionsApiController(FinanceService financeService) 
+        private readonly ITransactionsService _transactionsService;
+        public TransactionsApiController(ITransactionsService transactionsService) 
         {
-            _financeService = financeService;
+            _transactionsService = transactionsService;
         }
-
-        private readonly FinanceService _financeService;
 
         [Route("get-all")]
         [HttpGet]
-        public IEnumerable<Transaction> GetTransactions(FinanceService financeService)
+        public List<TransactionResponse> GetTransactions()
         {
-            return _financeService.GetTransactions();
+            return _transactionsService.GetTransactions();
         }
     }
 }

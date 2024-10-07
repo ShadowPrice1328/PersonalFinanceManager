@@ -3,8 +3,6 @@ using ServiceContracts;
 using ServiceContracts.DTO;
 using Services.Data;
 using Services.Helpers;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection;
 
 namespace Services
 {
@@ -58,7 +56,7 @@ namespace Services
             {
                 case nameof(Transaction.Category):
                     filteredTransactions = allTransactions.Where(t => string.IsNullOrEmpty(t.Category) ||
-                    t.Category == filterString)
+                    t.Category.ToLower() == filterString.ToLower())
                     .ToList();
                     break;
 
@@ -90,6 +88,16 @@ namespace Services
             }
 
             return filteredTransactions;
+        }
+
+        public List<TransactionResponse> GetTransactionBetweenTwoDates(DateTime? startDate, DateTime? endDate)
+        {
+            if (startDate == null || endDate == null) throw new ArgumentException("Both dates cannot be null.");
+
+            return _appDbContext.Transactions
+                .Where(t => t.Date >= startDate && t.Date <= endDate)
+                .Select(t => t.ToTransactionResponse())
+                .ToList();
         }
 
         public TransactionResponse? GetTransactionByTransactionId(Guid? transactionId)

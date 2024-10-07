@@ -44,7 +44,7 @@ namespace Personal_Finance_Manager.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewData["CategoryNames"] = _categoriesService.GetCategoryNames();
+            ViewBag.CategoryNames = _categoriesService.GetCategoryNames(); //!!!
             return View();
         }
 
@@ -66,7 +66,7 @@ namespace Personal_Finance_Manager.Controllers
         {
             var selectedTransaction = _transactionsService.GetTransactionByTransactionId(Id);
 
-            ViewData["CategoryNames"] = _categoriesService.GetCategoryNames();
+            ViewBag.CategoryNames = _categoriesService.GetCategoryNames();
             return View(selectedTransaction);
         }
 
@@ -101,8 +101,7 @@ namespace Personal_Finance_Manager.Controllers
         [Route("[controller]/filter-by/{filterBy}/{filterString}")]
         public IActionResult Filter(string filterBy, string filterString)
         {
-            // If nothing is selected -> updates the page
-            if (filterBy != nameof(TransactionResponse.Category) && filterString != "Select Category")
+            if (filterString != "Select Category" && !string.IsNullOrEmpty(filterString))
             {
                 var filterResult = _transactionsService.GetFilteredTransactions(filterBy, filterString);
 
@@ -111,6 +110,5 @@ namespace Personal_Finance_Manager.Controllers
 
             return RedirectToAction("Index");
         }
-
     }
 }
