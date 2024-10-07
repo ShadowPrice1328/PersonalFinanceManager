@@ -1,19 +1,28 @@
-﻿document.querySelector("#search-button").addEventListener("click", async function() {
-    var input = document.querySelector("#search-field").value;
-    console.log(input);
+﻿document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector("#search-button").addEventListener("click", async function () {
+        var input = document.querySelector("#search-field").value;
 
-    if (input === "") {
-        console.log("Search field is empty. No action taken.");
-        return;
-    }
+        document.querySelector("#message").innerHTML = "";
 
-    var response = await fetch(`Categories/search/${input}`);
+        if (input === "") {
+            console.log("Search field is empty. No action taken.");
+            return;
+        }
 
-    if (response.ok) {
-        var categories = await response.text();
-        document.querySelector("#categories-body").innerHTML = categories;
-    } else {
-        console.error("Error fetching categories:", response.statusText);
-    }
+        var response = await fetch(`Categories/search/${input}`);
 
+        if (response.ok) {
+            var categories = await response.text();
+
+            if (categories.trim() === "") {
+                document.querySelector("#message").innerHTML = "Nothing found!";
+            } else {
+                document.querySelector("#categories-body").innerHTML = categories;
+                document.getElementById('back-to-list').style.display = "inline";
+            }
+        } else {
+            console.error("Error fetching categories:", response.statusText);
+        }
+
+    });
 });

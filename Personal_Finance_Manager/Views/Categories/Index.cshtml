@@ -17,10 +17,7 @@
     </div>
 
     <div class="col-md-8 d-flex align-items-center">
-        @if (TempData["Message"] != null)
-        {
-            <span class="text-muted"> @TempData["Message"]</span>
-        }
+        <span class="text-muted" id="message"></span>
     </div>
 </div>
 
@@ -59,10 +56,9 @@
 
     <p>
         <a asp-action="Create" class="btn btn-success">Create New</a>
-        @if ((TempData["AfterSearch"] as bool?) == true)
-        {
-            <a asp-action="Index" class="btn btn-custom">Back to List</a>
-        }
+        <span style="display:none" id="back-to-list">
+            <a href="/Categories" class="btn btn-custom">Back to List</a>
+        </span>
     </p>
 </div>
 

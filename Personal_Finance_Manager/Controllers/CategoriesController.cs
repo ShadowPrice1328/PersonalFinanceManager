@@ -42,11 +42,6 @@ namespace Personal_Finance_Manager.Controllers
 
                 var searchResults = _categoriesService.GetFilteredCategories(nameof(CategoryResponse.Name), categoryName);
 
-                if (searchResults.Count != 0)
-                    TempData["AfterSearch"] = true;
-                else
-                    TempData["Message"] = "Nothing found!";
-
                 return PartialView("_CategoriesPartial", searchResults);
             }
 

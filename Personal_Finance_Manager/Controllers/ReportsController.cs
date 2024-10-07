@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Services.Data;
 using ServiceContracts;
-using Personal_Finance_Manager.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using ServiceContracts.DTO;
 
 namespace Personal_Finance_Manager.Controllers
