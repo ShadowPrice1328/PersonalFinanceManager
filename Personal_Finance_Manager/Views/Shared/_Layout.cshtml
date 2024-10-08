@@ -14,6 +14,27 @@
     <link rel="stylesheet" href="~/Personal_Finance_Manager.styles.css" asp-append-version="true" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: grid;
+            grid-template-rows: auto 1fr auto; /* Header | Content | Footer */
+        }
+
+        main {
+            padding-bottom: 3rem; /* Adjust this to match footer height */
+        }
+
+        footer {
+            background-color: #f8f9fa; /* Match your footer background */
+            border-top: 1px solid #dee2e6; /* Match your footer border */
+            padding: 1rem 0; /* Adjust for spacing */
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -39,19 +60,20 @@
     </header>
 
     <div class="container">
-        <main role="main" class="pb-3">
+        <main class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container-fluid">
-            &copy; 2023 - Personal Finance Manager - <a href="https://github.com/ShadowPrice1328/Personal_Finance_Manager">GitHub</a>
+    <footer class="footer text-muted">
+        <div class="container-fluid text-center">
+            &copy; 2024 - Personal Finance Manager - <a href="https://github.com/ShadowPrice1328/Personal_Finance_Manager">GitHub</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

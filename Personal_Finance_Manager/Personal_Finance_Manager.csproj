@@ -24,4 +24,7 @@
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 
+	<PropertyGroup>
+		<ScopedCssEnabled>false</ScopedCssEnabled>
+	</PropertyGroup>
 </Project>
