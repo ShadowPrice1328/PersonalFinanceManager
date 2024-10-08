@@ -33,8 +33,8 @@ namespace Personal_Finance_Manager.Controllers
             return View(allCategories);
         }
 
-        [Route("[controller]/search/{categoryName}")]
-        public IActionResult Search(string categoryName)
+        [Route("[controller]/search/{categoryName?}")]
+        public IActionResult Search(string? categoryName)
         {
             if (!string.IsNullOrEmpty(categoryName))
             {
@@ -45,7 +45,7 @@ namespace Personal_Finance_Manager.Controllers
                 return PartialView("_CategoriesPartial", searchResults);
             }
 
-            return RedirectToAction("Index");
+            return PartialView("_CategoriesPartial", _categoriesService.GetCategories());
         }
 
         [HttpGet]

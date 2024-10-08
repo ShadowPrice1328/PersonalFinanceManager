@@ -1,28 +1,38 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
-    document.querySelector("#search-button").addEventListener("click", async function () {
-        var input = document.querySelector("#search-field").value;
+﻿$(document).ready(function () {
+    $("#search-button").on("click", function () {
+        
+        var input = $("#search-field").val().trim(); // Use jQuery to get the value
 
-        document.querySelector("#message").innerHTML = "";
-
-        if (input === "") {
-            console.log("Search field is empty. No action taken.");
-            return;
-        }
-
-        var response = await fetch(`Categories/search/${input}`);
-
-        if (response.ok) {
-            var categories = await response.text();
-
-            if (categories.trim() === "") {
-                document.querySelector("#message").innerHTML = "Nothing found!";
-            } else {
-                document.querySelector("#categories-body").innerHTML = categories;
-                document.getElementById('back-to-list').style.display = "inline";
+        $.ajax({
+            url: `Categories/search/${input}`,
+            method: 'GET',
+            success: function (categories) {
+                if (categories.trim() === "") {
+                    $("#message").text("Nothing found!");
+                } else {
+                    $("#categories-body").html(categories);
+                    $("#back-to-list").show();
+                    $("#message").text("");
+                }
+            },
+            error: function (error) {
+                console.error("Error fetching categories:", error);
+                $("#message").text("Error fetching categories.");
             }
-        } else {
-            console.error("Error fetching categories:", response.statusText);
-        }
-
+        });
+    });
+    $("#back-to-list").on("click", function () {
+        $.ajax({
+            url: `Categories/search/`,
+            method: 'GET',
+            success: function (categories) {
+                $("#categories-body").html(categories);
+                $("#back-to-list").hide();
+            },
+            error: function (error) {
+                console.error("Error fetching categories:", error);
+                $("#message").text("Error fetching categories.");
+            }
+        });
     });
 });
