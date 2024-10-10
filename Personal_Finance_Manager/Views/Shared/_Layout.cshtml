@@ -8,70 +8,58 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/setactive.js"></script>
 
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-
-        body {
-            display: grid;
-            grid-template-rows: auto 1fr auto; /* Header | Content | Footer */
-        }
-
-        main {
-            padding-bottom: 3rem; /* Adjust this to match footer height */
-        }
-
-        footer {
-            background-color: #f8f9fa; /* Match your footer background */
-            border-top: 1px solid #dee2e6; /* Match your footer border */
-            padding: 1rem 0; /* Adjust for spacing */
-        }
-    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PFM</a>
-
-                <div class="navbar-collapse collapse d-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Transactions" asp-action="Index">Transactions</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Reports" asp-action="Index">Reports</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <ul>
+            <li>
+                <a asp-controller="Home" asp-action="Index">Home</a>
+            </li>
+            <li>
+                <a asp-controller="Categories" asp-action="Index">Categories</a>
+            </li>
+            <li>
+                <a asp-controller="Transactions" asp-action="Index">Transactions</a>
+            </li>
+            <li>
+                <a asp-controller="Reports" asp-action="Index">Reports</a>
+            </li>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <li style="float: right;">
+                    <a asp-controller="Auth" asp-action="Register">Register</a>
+                </li>
+                <li style="float: right;">
+                    <a asp-controller="Auth" asp-action="Login">Login</a>
+                </li>
+            }
+            else
+            {
+                <li style="float: right;">
+                    <a asp-controller="Auth" asp-action="Logout">Logout</a>
+                </li>
+            }
+        </ul>
     </header>
 
-    <div class="container">
-        <main class="pb-3">
+    <div>
+        <main>
             @RenderBody()
         </main>
     </div>
 
-    <footer class="footer text-muted">
-        <div class="container-fluid text-center">
-            &copy; 2024 - Personal Finance Manager - <a href="https://github.com/ShadowPrice1328/Personal_Finance_Manager">GitHub</a>
+    <footer class="text-muted">
+        <div class="text-center">
+            &copy; 2024 - Personal Finance Manager</a>
         </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
