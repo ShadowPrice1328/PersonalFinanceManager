@@ -1,6 +1,139 @@
-﻿html, body {
+﻿body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    position: relative;
     height: 100%;
     margin: 0;
+    font-family: Bahnschrift;
+    overflow: hidden;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:  url('../images/pipes.webp');
+    opacity: 0.4;
+    z-index: -1;
+}
+
+.text-good {
+    color: mediumseagreen;
+}
+
+.text-bad {
+    color: #e82424;
+}
+
+.text-formal {
+    color: royalblue;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+    width: 100%;
+}
+
+.form-box {
+    background-color: #ffffff;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    opacity: 80%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    box-shadow: 20px 20px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    right: -100%;
+    transition: right 0.6s ease;
+    z-index: 10;
+}
+
+.form-box.slide {
+    right: 50px;
+}
+
+.cool-text {
+    font-style:italic;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.form-control {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn {
+    margin-top: 1rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    width: 100%; 
+    box-sizing: border-box;
+}
+
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.card {
+    flex: 1 1 auto;
+    min-width: 300px;
+    max-width: 400px;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    transition: transform 0.3s;
+    max-height: 300px;
+    cursor: pointer;
+}
+
+.card ul {
+    background-color:inherit;
+}
+
+.card ul li {
+    float: none;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+.card h2 {
+    margin: 0; 
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.card p {
+    color: #555;
 }
 
 li {
@@ -32,7 +165,6 @@ header {
 }
 
 a {
-    font-family: Bahnschrift;
     text-decoration: none;
     color: inherit;
 }
@@ -42,8 +174,8 @@ footer {
     background-color: #f8f9fa;
     border-top: 1px solid #dee2e6;
     padding: 1rem 0;
-    font-family: Bahnschrift;
-    font-size:16px
+    font-size: 16px;
+    grid-row: 3;
 }
 
 footer a {
@@ -78,6 +210,10 @@ main {
 }
 
 .btn-custom:hover {
+    border-color: white;
+}
+
+.btn-custom:hover {
     background-color: black;
     color: white;
 }
@@ -104,6 +240,7 @@ main {
 
 .text-muted {
     color: lightslategray;
+    pointer-events: none;
 }
 
 .text-center {

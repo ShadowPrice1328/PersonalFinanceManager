@@ -4,7 +4,7 @@ namespace Personal_Finance_Manager.Controllers
 {
     public class AuthController : Controller
     {
-        public IActionResult Login()
+        public IActionResult Register()
         {
             return View();
         }

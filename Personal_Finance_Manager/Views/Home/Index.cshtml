@@ -4,30 +4,88 @@
     ViewData["Title"] = "Home Page";
 }
 
+<div class="parallax"></div>
 <div class="container text-center">
-    <div class="bg-light rounded p-3">
-        <h1 class="display-4 text-black">Welcome to PFM</h1>
-        <p class="text-black">Database connection status: 
-            <span class="@Model.ConnectionStatusColor">@Model.ConnectionStatus</span></p>
-    </div>
-
     @if (Model.ConnectionStatus == "Connection error!")
     {
-        <p class="mt-4"><span class="@Model.ConnectionStatusColor"> @Model.ErrorMessage</span></p>
+        <p><span class="@Model.ConnectionStatusColor"> @Model.ErrorMessage</span></p>
     }
-    else
+
+    @if (User.Identity.IsAuthenticated)
     {
-        <div class="row justify-content-center mt-4">
-            <div class="col-md-8">
-                <h2 class="mb-4">You have <span class="text-primary">@Model.Categories.Count()</span> categories:</h2>
+        <div>
+            <h1>Welcome back, @User.Identity.Name!</h1>
+            <div class="dashboard">
+                <div class="card" onclick="redirect(this.id)" id="categories">
+                    <h2>Categories (@Model.Categories.Count)</h2>
+                    <ul>
+                        @foreach (var categoryName in Model.Categories.Select(x => x.Name).ToList().Take(5))
+                        {
+                            <li> <p> @categoryName </p>  </li>
+                        }
+                        <li>. . .</li>
+                    </ul>
 
-                @foreach (var category in Model.Categories.ToList())
-                {
-                    <p class="mb-1" style="font-size: 18px;">@category.Name</p>
-                }
-
-                <h2 class="mt-4">Number of transactions: <span class="text-primary">@Model.TransactionCount</span></h2>
+                </div>
+                <div class="card" onclick="redirect(this.id)" id="transactions">
+                    <h2>Recent Transactions</h2>
+                    <ul>
+                        @foreach (var transaction in Model.Transactions.Take(5))
+                        {
+                            <li>
+                                <p>
+                                    @transaction.Category -
+                                    @transaction.Cost -
+                                    @(transaction.Description.Length > 15 
+                                    ? transaction.Description.Substring(0, 15) 
+                                    : transaction.Description)
+                                </p>
+                            </li>
+                        }
+                        <li>. . .</li>
+                    </ul>
+                </div>
             </div>
         </div>
     }
+    else
+    {
+        <div style="padding-right: 10rem;">
+            <h1>Welcome to PFM</h1>
+            <h3>Manage your personal finances <span class="cool-text">effortlessly</span>.</h3>
+        </div>
+        <div class="form-box" id="loginForm">
+            <h1>Sign In</h1>
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="text" id="email" name="email" placeholder="Enter your email" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" class="form-control" required />
+                </div>
+                <button onclick="login()" class="btn btn-custom">Log in</button> @* implement! *@
+        </div>
+    }
+
 </div>
+
+<script>
+    function redirect(choice) {
+        window.location.href = `/${choice}`;
+    }
+</script>
+
+<script>
+    function toggleLoginForm() {
+        const loginForm = document.getElementById('loginForm');
+        loginForm.classList.toggle('slide');
+    }
+
+    window.onload = function () {
+        const isAuthenticated = @Html.Raw(User.Identity.IsAuthenticated.ToString().ToLower());
+        if (!isAuthenticated) {
+            document.getElementById('loginForm').classList.add('slide');
+        }
+    };
+</script>

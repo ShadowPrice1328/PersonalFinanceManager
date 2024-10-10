@@ -21,27 +21,25 @@
                 <a asp-controller="Home" asp-action="Index">Home</a>
             </li>
             <li>
-                <a asp-controller="Categories" asp-action="Index">Categories</a>
+                <a asp-controller="Categories" asp-action="Index" class="@(User.Identity.IsAuthenticated ? "" : "text-muted")">Categories</a>
             </li>
             <li>
-                <a asp-controller="Transactions" asp-action="Index">Transactions</a>
+                <a asp-controller="Transactions" asp-action="Index" class="@(User.Identity.IsAuthenticated ? "" : "text-muted")">Transactions</a>
             </li>
             <li>
-                <a asp-controller="Reports" asp-action="Index">Reports</a>
+                <a asp-controller="Reports" asp-action="Index" class="@(User.Identity.IsAuthenticated ? "" : "text-muted")">Reports</a>
             </li>
+
             @if (!User.Identity.IsAuthenticated)
             {
                 <li style="float: right;">
-                    <a asp-controller="Auth" asp-action="Register">Register</a>
-                </li>
-                <li style="float: right;">
-                    <a asp-controller="Auth" asp-action="Login">Login</a>
+                    <a asp-controller="Auth" asp-action="Register">Create a new account</a>
                 </li>
             }
             else
             {
                 <li style="float: right;">
-                    <a asp-controller="Auth" asp-action="Logout">Logout</a>
+                    <a onclick="logout()">Logout</a>
                 </li>
             }
         </ul>
@@ -55,7 +53,7 @@
 
     <footer class="text-muted">
         <div class="text-center">
-            &copy; 2024 - Personal Finance Manager</a>
+            &copy; 2024 - Personal Finance Manager
         </div>
     </footer>
 

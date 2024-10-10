@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 using Personal_Finance_Manager.ViewModels;
 using ServiceContracts;
+using ServiceContracts.DTO;
 using Services;
 using Services.Data;
 using System.Diagnostics;
@@ -15,15 +16,19 @@ namespace Personal_Finance_Manager.Controllers
         private readonly AppDbContext _appDbContext;
         private readonly IDatabaseService _databaseService;
         private readonly ICategoriesService _categoriesService;
+        private readonly ITransactionsService _transactionsService;
 
-		public HomeController(ILogger<HomeController> logger, AppDbContext appDbContext, IDatabaseService databaseService,
-                                ICategoriesService categoriesService)
+
+        public HomeController(ILogger<HomeController> logger, AppDbContext appDbContext, IDatabaseService databaseService,
+                                ICategoriesService categoriesService, ITransactionsService transactionsService)
 		{
             _appDbContext = appDbContext;
 			_logger = logger;
             _databaseService = databaseService;
             _categoriesService = categoriesService;
-		}
+            _transactionsService = transactionsService;
+
+        }
 
         public IActionResult Index()
         {
@@ -36,15 +41,16 @@ namespace Personal_Finance_Manager.Controllers
                 string databaseName = _appDbContext.Database.GetDbConnection().Database;
 
                 viewModel.ConnectionStatus = $"Connected to [{databaseName}] database!";
-                viewModel.ConnectionStatusColor = "text-done";
+                viewModel.ConnectionStatusColor = "text-good";
                 viewModel.Categories = _categoriesService.GetCategories();
+                viewModel.Transactions = _transactionsService.GetTransactions();
                 viewModel.TransactionCount = _appDbContext.Transactions.Count();
             }
             else if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 viewModel.ConnectionStatus = "Connection error!";
                 viewModel.ErrorMessage = ErrorMessage;
-                viewModel.ConnectionStatusColor = "text-danger";
+                viewModel.ConnectionStatusColor = "text-bad";
             }
 
             return View(viewModel);
