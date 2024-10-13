@@ -4,7 +4,6 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="parallax"></div>
 <div class="container text-center">
     @if (Model.ConnectionStatus == "Connection error!")
     {
@@ -55,28 +54,31 @@
             <h3>Manage your personal finances <span class="cool-text">effortlessly</span>.</h3>
         </div>
         <div class="form-box" id="loginForm">
-            <h1>Sign In</h1>
+            <h1>Sign In <i class="fa-solid fa-right-to-bracket" style="padding-right: 10px"></i></h1>
                 <div class="form-group">
                     <label for="email">Email address</label>
                     <input type="text" id="email" name="email" placeholder="Enter your email" class="form-control" required />
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
+                     <div class="row-between">
+                        <label for="password">Password</label>
+                    <i class="fa-solid fa-eye" id="pass-eye" style="cursor:pointer;padding-right:2px;" onclick="showpassword()"></i>
+                    </div>
                     <input type="password" id="password" name="password" placeholder="Enter your password" class="form-control" required />
                 </div>
-                <button onclick="login()" class="btn btn-custom">Log in</button> @* implement! *@
+                <button onclick="login()" class="btn btn-custom">Login</button> @* implement! *@
         </div>
     }
 
 </div>
 
+<script src="~/js/form.js"></script>
+
 <script>
     function redirect(choice) {
         window.location.href = `/${choice}`;
     }
-</script>
 
-<script>
     function toggleLoginForm() {
         const loginForm = document.getElementById('loginForm');
         loginForm.classList.toggle('slide');

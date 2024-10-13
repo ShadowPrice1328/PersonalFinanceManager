@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var authenticated = User.Identity.IsAuthenticated;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,6 +16,7 @@
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/js/setactive.js"></script>
+    <script src="https://kit.fontawesome.com/fa5d6ffa04.js" crossorigin="anonymous"></script>
 
 </head>
 <body>
@@ -21,19 +26,19 @@
                 <a asp-controller="Home" asp-action="Index">Home</a>
             </li>
             <li>
-                <a asp-controller="Categories" asp-action="Index" class="@(User.Identity.IsAuthenticated ? "" : "text-muted")">Categories</a>
+                <a asp-controller="Categories" asp-action="Index" class="@(authenticated ? "" : "text-muted")">Categories</a>
             </li>
             <li>
-                <a asp-controller="Transactions" asp-action="Index" class="@(User.Identity.IsAuthenticated ? "" : "text-muted")">Transactions</a>
+                <a asp-controller="Transactions" asp-action="Index" class="@(authenticated ? "" : "text-muted")">Transactions</a>
             </li>
             <li>
-                <a asp-controller="Reports" asp-action="Index" class="@(User.Identity.IsAuthenticated ? "" : "text-muted")">Reports</a>
+                <a asp-controller="Reports" asp-action="Index" class="@(authenticated ? "" : "text-muted")">Reports</a>
             </li>
 
-            @if (!User.Identity.IsAuthenticated)
+            @if (!authenticated)
             {
                 <li style="float: right;">
-                    <a asp-controller="Auth" asp-action="Register">Create a new account</a>
+                    <a href="/register"><i class="fa-solid fa-user-plus" style="padding-right: 12px"></i>Create a new account</a>
                 </li>
             }
             else

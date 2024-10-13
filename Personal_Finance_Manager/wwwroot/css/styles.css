@@ -61,6 +61,28 @@ body::before {
     z-index: 10;
 }
 
+.form-box h2 {
+    margin-bottom: 0rem; 
+}
+
+.row-between {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}
+
+.sub-heading {
+    font-size: 1rem;
+    margin: 0;
+    margin-bottom: 1rem;
+    margin-top: -0.5rem;
+}
+
+.sub-heading a{
+    text-decoration: underline;
+    color: royalblue;
+}
+
 .form-box.slide {
     right: 50px;
 }

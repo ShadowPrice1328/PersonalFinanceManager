@@ -1,3 +1,31 @@
 ﻿@{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Create a new account";
 }
+
+<div class="container text-center">
+    <div class="form-box" style="right: 0; " id="registrationForm">
+        <h2>Create an PFM account</h2>
+        <p class="sub-heading">Create a free account or 
+            <a href="/">log in</a>
+        </p>
+
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your name" class="form-control" autocomplete="off" required />
+        </div>
+        <div class="form-group">
+            <div class="row-between">
+                <label for="password">Password</label>
+                <i class="fa-solid fa-eye" id="pass-eye" style="cursor:pointer;padding-right:2px;" onclick="showpassword()"></i>
+            </div>            
+            <input type="password" id="password" name="password" placeholder="Enter your password" class="form-control" required />
+        </div>
+        <button onclick="login()" class="btn btn-custom">Sign Up</button> @* implement! *@
+    </div>
+</div>
+
+<script src="~/js/form.js"></script>
