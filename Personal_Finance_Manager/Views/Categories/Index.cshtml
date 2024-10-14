@@ -11,7 +11,7 @@
 
 <div>
     <input type="text" name="input" id="search-field" class="search-control" placeholder="Enter a name of category..."
-           autocomplete="off" />
+           autocomplete="off" style="margin-right: 0.5rem"/>
     <button id="search-button" class="btn-custom">Search</button>
     <a class="btn btn-create" asp-action="Create">Create</a>
     <span class="text-muted" style="margin-left: 0.5rem;" id="message"></span>
@@ -41,9 +41,9 @@
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen"></i></a> |
+                        <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
             }

@@ -70,8 +70,55 @@ body::before {
     z-index: 10;
 }
 
+.crud-form {
+    right: 0;
+    overflow: hidden;
+    padding: 0;
+    white-space: pre-line;
+    align-items: center;
+    gap: 0;
+    background-color: #ffffff;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    opacity: 80%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 20px 20px 8px rgba(0, 0, 0, 0.1);
+}
+
+.crud-form.form-group.btn-group a.btn {
+    margin-top:0;
+}
+
+.form-head {
+    padding: 0 100% 0 100%;
+    text-align: center;
+    border-bottom: 1px solid black;
+    background-color: black;
+    color: white;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+    position:static;
+}
+
+.form-head h1 {
+    margin: 0.8rem 0 0.8rem 0;
+    margin-left: 10%;
+}
+
+.form-head i {
+    margin-left: 80%;
+}
+
 .form-box h2 {
-    margin-bottom: 0rem; 
+    margin-bottom: 0rem;
 }
 
 .row-between {
@@ -106,10 +153,6 @@ body::before {
     font-style:italic;
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
 
 .form-group label {
     margin-bottom: 0.5rem;
@@ -122,6 +165,8 @@ body::before {
     border-radius: 4px;
     max-width: 30rem;
     min-width: 20rem;
+    width: 95%;
+    font-family: Bahnschrift;
 }
 
 .search-control {
@@ -152,7 +197,7 @@ body::before {
     padding: 0.5rem;
 }
 
-.table td:nth-last-child(-n+2) {
+.table td:not(:first-child) {
     border-left: 1px solid black;
 }
 
@@ -161,27 +206,27 @@ body::before {
     background-color: #e1e1e1;
 }
 
-.table th:nth-last-child(-n+2) {
+.table th:not(:first-child) {
     border-left: 1px solid black;
 }
 
 .btn {
     margin-top: 1rem;
-    padding: 0.5rem;
+    padding: 0.6rem;
     cursor: pointer;
     width: 100%; 
     box-sizing: border-box;
-    border-radius: 3px;
+    border-radius: 6px;
 }
 
 .btn-create {
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1rem;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 6px;
     border: 2px solid white;
     border-right: 2px solid #7f7f7f;
     border-bottom: 2px solid #7f7f7f;
-    background-color: #13aa52;
+    background-color: forestgreen;
     color: white;
     font-family: Bahnschrift;
 }
@@ -191,7 +236,7 @@ body::before {
 }
 
 a.btn.btn-create {
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .dashboard {
@@ -309,16 +354,26 @@ main {
     background-color: black;
     border-color: white;
     color: white;
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1rem;
     text-decoration: none;
-    border-radius: 4px;
+    border-radius: 6px;
     display: inline-block;
     cursor: pointer;
     font-family: Bahnschrift;
+    font-size: 14px;
 }
 
 .btn-custom:hover {
     border-color: lightgrey;
+}
+
+.btn-group {
+    display: flex;
+    text-align: center;
+    flex-direction: row;
+    width: 100%;
+    gap: 0.5rem;
+    margin-top: -20px;
 }
 
 .select-wrapper {

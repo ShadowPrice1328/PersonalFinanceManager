@@ -11,15 +11,17 @@
         <div class="form-group">
             <div class="select-wrapper">
                 @if (Model.CategoryNames.Any())
-
                 {
-                    <select class="form-control" id="category-selector" name="selectedCategory" placeholder="Select Category">
+                    <select class="form-control" id="category-selector" name="selectedCategory"
+                            placeholder="Select Category" style="margin-right: 0.5rem">
                         <option value="" disabled selected hidden>Select Category</option>
                         @foreach (var category in Model.CategoryNames)
                         {
                             <option value="@category">@category</option>
                         }
                     </select>
+                    <a class="btn btn-create" asp-action="Create">Create</a>
+
                 }
 
                 else
@@ -29,7 +31,6 @@
                         <option value="">No categories available</option>
                     </select>
                 }
-                <span class="arrow-down">&#9660;</span>
             </div>
         </div>
     </div>
@@ -53,7 +54,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Transactions.First().Description)
             </th>
-            <th></th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody id="transactions-body">
@@ -76,18 +77,17 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen"></i></a> |
+                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 <p>
-    <a asp-action="Create" class="btn btn-success">Add New</a>
     <span style="display:none" id="back-to-list">
-        <a href="/Transactions" class="btn btn-custom">Back to List</a>
+        <a href="/Transactions" class="btn-custom">Back to List</a>
     </span>
 </p>
 
