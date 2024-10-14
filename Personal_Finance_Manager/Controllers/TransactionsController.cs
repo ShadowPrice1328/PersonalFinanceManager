@@ -35,7 +35,7 @@ namespace Personal_Finance_Manager.Controllers
             var viewModel = new TransactionViewModel
             {
                 Transactions = _transactionsService.GetTransactions(),
-                CategoryNames = _categoriesService.GetCategoryNames()
+                CategoryNames = _transactionsService.GetTransactionsCategoriesNames()
             };
 
             return View(viewModel);
@@ -44,7 +44,7 @@ namespace Personal_Finance_Manager.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.CategoryNames = _categoriesService.GetCategoryNames(); //!!!
+            ViewBag.CategoryNames = _categoriesService.GetCategoryNames();
             return View();
         }
 

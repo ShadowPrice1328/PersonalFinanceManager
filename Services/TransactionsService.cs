@@ -28,6 +28,10 @@ namespace Services
             return transaction.ToTransactionResponse();
         }
 
+        public List<string?> GetTransactionsCategoriesNames()
+        {
+            return _appDbContext.Transactions.Select(t => t.Category).Distinct().ToList() ?? new List<string>();
+        }
         public bool DeleteTransaction(Guid? guid)
         {
             if (!guid.HasValue)

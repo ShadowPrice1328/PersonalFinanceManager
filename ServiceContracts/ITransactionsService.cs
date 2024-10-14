@@ -58,5 +58,11 @@ namespace ServiceContracts
         /// <param name="endDate"></param>
         /// <returns>A list of selected TransactionRepsponses</returns>
         List<TransactionResponse> GetTransactionBetweenTwoDates(DateTime? startDate, DateTime? endDate);
+
+        /// <summary>
+        /// Retrives all categories names of present transactions
+        /// </summary>
+        /// <returns>A list of names of categories</returns>
+        List<string?> GetTransactionsCategoriesNames();
     }
 }
