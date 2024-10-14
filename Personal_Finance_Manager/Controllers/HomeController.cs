@@ -56,6 +56,11 @@ namespace Personal_Finance_Manager.Controllers
             return View(viewModel);
         }
 
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{

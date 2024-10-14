@@ -10,7 +10,7 @@
         <p><span class="@Model.ConnectionStatusColor"> @Model.ErrorMessage</span></p>
     }
 
-    @if (User.Identity.IsAuthenticated)
+    @if (!User.Identity.IsAuthenticated)
     {
         <div>
             <h1>Welcome back, @User.Identity.Name!</h1>

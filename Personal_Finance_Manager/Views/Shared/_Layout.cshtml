@@ -1,5 +1,5 @@
 ﻿@{
-    var authenticated = User.Identity.IsAuthenticated;
+    var authenticated = !User.Identity.IsAuthenticated;
 }
 
 <!DOCTYPE html>
@@ -34,6 +34,9 @@
             <li>
                 <a asp-controller="Reports" asp-action="Index" class="@(authenticated ? "" : "text-muted")">Reports</a>
             </li>
+            <li>
+                <a asp-controller="Home" asp-action="Contact">Contact</a>
+            </li>
 
             @if (!authenticated)
             {
@@ -44,7 +47,7 @@
             else
             {
                 <li style="float: right;">
-                    <a onclick="logout()">Logout</a>
+                    <a href="#" onclick="logout()">Logout</a>
                 </li>
             }
         </ul>

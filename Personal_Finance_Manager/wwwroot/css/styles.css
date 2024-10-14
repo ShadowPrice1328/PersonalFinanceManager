@@ -10,6 +10,10 @@
     overflow-x: hidden;
 }
 
+main {
+    padding:0 20px 0 20px !important;
+}
+
 body::before {
     content: "";
     position: absolute;
@@ -32,6 +36,11 @@ body::before {
 
 .text-formal {
     color: royalblue;
+}
+
+.btn-primary {
+    padding: 0.5rem 1rem;
+    border-radius: 3px
 }
 
 .container {
@@ -71,6 +80,12 @@ body::before {
     align-items: center;
 }
 
+.row-no-wrap {
+    display: flex;
+    justify-content: left;
+    white-space: nowrap;
+}
+
 .sub-heading {
     font-size: 1rem;
     margin: 0;
@@ -78,7 +93,7 @@ body::before {
     margin-top: -0.5rem;
 }
 
-.sub-heading a{
+.sub-heading a {
     text-decoration: underline;
     color: royalblue;
 }
@@ -105,6 +120,49 @@ body::before {
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
+    max-width: 30rem;
+    min-width: 20rem;
+}
+
+.search-control {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 30%;
+}
+
+.table {
+    margin-top: 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.table tr:nth-child(odd) {
+    background-color: rgba(242, 242, 242, 0.4);
+}
+
+.table th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 0.5rem;
+}
+
+.table td:nth-last-child(-n+2) {
+    border-left: 1px solid black;
+}
+
+.table th {
+    text-align: left;
+    background-color: #e1e1e1;
+}
+
+.table th:nth-last-child(-n+2) {
+    border-left: 1px solid black;
 }
 
 .btn {
@@ -113,6 +171,27 @@ body::before {
     cursor: pointer;
     width: 100%; 
     box-sizing: border-box;
+    border-radius: 3px;
+}
+
+.btn-create {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid white;
+    border-right: 2px solid #7f7f7f;
+    border-bottom: 2px solid #7f7f7f;
+    background-color: #13aa52;
+    color: white;
+    font-family: Bahnschrift;
+}
+
+.btn-create:hover {
+    border-color: lightgray;
+}
+
+a.btn.btn-create {
+    font-size: 14px;
 }
 
 .dashboard {
@@ -227,18 +306,21 @@ main {
 }
 
 .btn-custom {
-    background-color: white;
-    border-color: black;
-}
-
-.btn-custom:hover {
-    border-color: white;
-}
-
-.btn-custom:hover {
     background-color: black;
+    border-color: white;
     color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    font-family: Bahnschrift;
 }
+
+.btn-custom:hover {
+    border-color: lightgrey;
+}
+
 .select-wrapper {
     position: relative;
 }

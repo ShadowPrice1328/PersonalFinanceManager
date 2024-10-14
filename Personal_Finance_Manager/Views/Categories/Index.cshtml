@@ -4,22 +4,17 @@
     ViewData["Title"] = "Categories";
 }
 
-<h2>Category list:</h2>
+<div class="page-content">
 
-<div class="row flex-nowrap">
+</div>
+<h2>List of categories</h2>
 
-    <div class="col-md-4">
-        <div class="form-group d-flex">
-            <input type="text" name="input" id="search-field" class="form-control mr-2" placeholder="Enter a name of category..."
-            autocomplete="off"/>
-            <div style="width: 8px;"></div>
-            <button id="search-button" class="btn btn-primary">Search</button>
-        </div>
-    </div>
-
-    <div class="col-md-8 d-flex align-items-center">
-        <span class="text-muted" id="message"></span>
-    </div>
+<div>
+    <input type="text" name="input" id="search-field" class="search-control" placeholder="Enter a name of category..."
+           autocomplete="off" />
+    <button id="search-button" class="btn-custom">Search</button>
+    <a class="btn btn-create" asp-action="Create">Create</a>
+    <span class="text-muted" style="margin-left: 0.5rem;" id="message"></span>
 </div>
 
 <div>
@@ -32,7 +27,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Description)
                 </th>
-                <th></th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody id="categories-body">
@@ -56,9 +51,8 @@
     </table>
 
     <p>
-        <a asp-action="Create" class="btn btn-success">Create New</a>
         <span style="display:none" id="back-to-list">
-            <a class="btn btn-custom">Back to List</a>
+            <a class="btn-custom">Back to List</a>
         </span>
     </p>
 </div>
