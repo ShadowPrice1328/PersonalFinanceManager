@@ -1,6 +1,7 @@
 ﻿@model HomeViewModel
 
 @{
+    var authenticated = User.Identity.IsAuthenticated;
     ViewData["Title"] = "Home Page";
 }
 
@@ -10,7 +11,7 @@
         <p><span class="@Model.ConnectionStatusColor"> @Model.ErrorMessage</span></p>
     }
 
-    @if (User.Identity.IsAuthenticated)
+    @if (authenticated)
     {
         <div>
             <h1>Welcome back, @User.Identity.Name!</h1>
@@ -72,22 +73,13 @@
 
 </div>
 
-<script src="~/js/form.js"></script>
+<input type="hidden" value="@User.Identity.IsAuthenticated.ToString()" id="authenticated"/>
+
+<script src="~/js/password.js"></script>
+<script src="~/js/form-slide.js"></script>
 
 <script>
     function redirect(choice) {
         window.location.href = `/${choice}`;
     }
-
-    function toggleLoginForm() {
-        const loginForm = document.getElementById('loginForm');
-        loginForm.classList.toggle('slide');
-    }
-
-    window.onload = function () {
-        const isAuthenticated = @Html.Raw(User.Identity.IsAuthenticated.ToString().ToLower());
-        if (!isAuthenticated) {
-            document.getElementById('loginForm').classList.add('slide');
-        }
-    };
 </script>
