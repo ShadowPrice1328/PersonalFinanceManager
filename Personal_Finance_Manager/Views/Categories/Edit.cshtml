@@ -1,11 +1,11 @@
 ﻿@model CategoryUpdateRequest
 
 @{
-    ViewData["Title"] = "Edit Category";
+    ViewData["Title"] = $"Edit {Model.Name} Category";
 }
 
 <div class="container">
-    <div class="crud-form">
+    <div class="crud-form" style="max-width: 550px;">
         <div class="form-head">
             <h1>Edit</h1>
             <i class="fa-solid fa-pen-to-square"></i>

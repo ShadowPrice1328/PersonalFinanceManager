@@ -39,8 +39,15 @@ body::before {
 }
 
 .btn-primary {
-    padding: 0.5rem 1rem;
-    border-radius: 3px
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    border: 2px solid white;
+    border-right: 2px solid #7f7f7f;
+    border-bottom: 2px solid #7f7f7f;
+    background-color: midnightblue;
+    color: white;
+    font-family: Bahnschrift;
 }
 
 .container {
@@ -390,6 +397,38 @@ main {
     right: 10px;
     transform: translateY(-50%);
     pointer-events: none;
+}
+
+.details-section {
+    padding-bottom: 1rem;
+    font-family: Bahnschrift;
+}
+
+dl {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0.5rem 1rem;
+    align-items: center;
+    margin: 1.5rem;
+}
+
+dt {
+    font-weight: bold;
+    color: midnightblue;
+    font-size: 1rem;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.3rem;
+}
+
+dd {
+    font-size: 1rem;
+    color: #333;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    word-break: break-word;
 }
 
 .bg-cost {

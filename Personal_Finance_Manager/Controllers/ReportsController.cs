@@ -10,13 +10,15 @@ namespace Personal_Finance_Manager.Controllers
         private readonly IDatabaseService _databaseService;
         private readonly ICategoriesService _categoriesService;
         private readonly IReportService _reportService;
+        private readonly ITransactionsService _transactionsService;
 
-
-        public ReportsController(IDatabaseService databaseService, ICategoriesService categoriesService, IReportService reportService)
+        public ReportsController(IDatabaseService databaseService, ICategoriesService categoriesService, 
+                                    IReportService reportService, ITransactionsService transactionsService)
         {
             _databaseService = databaseService;
             _categoriesService = categoriesService;
             _reportService = reportService;
+            _transactionsService = transactionsService;
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)
@@ -31,7 +33,7 @@ namespace Personal_Finance_Manager.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.CategoryNames = _categoriesService.GetCategoryNames();
+            ViewBag.CategoryNames = _transactionsService.GetTransactionsCategoriesNames();
             return View();
         }
         [HttpPost]
