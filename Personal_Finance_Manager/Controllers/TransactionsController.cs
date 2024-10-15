@@ -98,7 +98,7 @@ namespace Personal_Finance_Manager.Controllers
             return RedirectToAction("Index");
         }
 
-        [Route("[controller]/filter-by/{filterBy}/{filterString}")]
+        [Route("[controller]/filter-by/{filterBy?}/{filterString?}")]
         public IActionResult Filter(string filterBy, string filterString)
         {
             if (filterString != "Select Category" && !string.IsNullOrEmpty(filterString))
@@ -108,7 +108,7 @@ namespace Personal_Finance_Manager.Controllers
                 return PartialView("_TransactionsPartial", filterResult);
             }
 
-            return RedirectToAction("Index");
+            return PartialView("_TransactionsPartial", _transactionsService.GetTransactions());
         }
     }
 }

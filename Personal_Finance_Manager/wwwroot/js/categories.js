@@ -25,18 +25,4 @@
             document.getElementById("message").innerHTML = "";
         }
     });
-    $("#back-to-list").on("click", function () {
-        $.ajax({
-            url: `Categories/search/`,
-            method: 'GET',
-            success: function (categories) {
-                $("#categories-body").html(categories);
-                $("#back-to-list").hide();
-            },
-            error: function (error) {
-                console.error("Error fetching categories:", error);
-                $("#message").text("Error fetching categories.");
-            }
-        });
-    });
 });
