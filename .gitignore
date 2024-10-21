@@ -5,6 +5,7 @@
 
 # Folders
 Migrations/
+assets/
 
 # User-specific files
 *.rsuser
