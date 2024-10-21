@@ -52,6 +52,7 @@ body::before {
 
 .btn-primary:hover {
     background-color: #120f4e;
+    border-color: lightgray;
 }
 
 .container {
@@ -242,6 +243,23 @@ body::before {
     color: white;
     font-family: Bahnschrift;
 }
+
+.btn-danger {
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    border: 2px solid white;
+    border-right: 2px solid #7f7f7f;
+    border-bottom: 2px solid #7f7f7f;
+    background-color: darkred;
+    color: white;
+    font-family: Bahnschrift;
+}
+
+    .btn-danger:hover {
+        background-color: #6b0606;
+        border-color: lightgray;
+    }
 
 .btn-create:hover {
     border-color: lightgray;
