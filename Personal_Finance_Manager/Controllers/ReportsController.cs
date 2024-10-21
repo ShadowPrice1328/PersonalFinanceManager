@@ -31,7 +31,13 @@ namespace Personal_Finance_Manager.Controllers
             base.OnActionExecuting(context);
         }
 
-        public IActionResult Index()
+        public IActionResult Overview()
+        {
+            ViewBag.CategoryNames = _transactionsService.GetTransactionsCategoriesNames();
+            return View();
+        }
+
+        public IActionResult Daily()
         {
             ViewBag.CategoryNames = _transactionsService.GetTransactionsCategoriesNames();
             return View();

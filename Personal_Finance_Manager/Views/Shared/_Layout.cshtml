@@ -32,7 +32,10 @@
                 <a asp-controller="Transactions" asp-action="Index" class="@(authenticated ? "" : "text-muted")">Transactions</a>
             </li>
             <li>
-                <a asp-controller="Reports" asp-action="Index" class="@(authenticated ? "" : "text-muted")">Reports</a>
+                <a asp-controller="Reports" asp-action="Overview" class="@(authenticated ? "" : "text-muted")">Overview</a>
+            </li>
+            <li>
+                <a asp-controller="Reports" asp-action="Daily" class="@(authenticated ? "" : "text-muted")">Daily Report</a>
             </li>
             <li>
                 <a asp-controller="Home" asp-action="Contact">Contact</a>
