@@ -3,7 +3,6 @@
 
     $("#delete-btn").on("click", function (e) {
         if ($("#delete-btn").val() !== "Yes") {
-            console.log("Not yes, default...");
 
             e.preventDefault();
 
@@ -13,8 +12,6 @@
 
             $("#delete-btn").val("Yes");
             $("#back-to-list-btn").text("No");
-        } else {
-            console.log("yes!");
         }
     });
 
