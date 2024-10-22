@@ -103,25 +103,25 @@ body::before {
     box-shadow: 20px 20px 8px rgba(0, 0, 0, 0.1);
 }
 
-#transactions-create {
+#transactions {
     white-space: normal;
     margin-top: 3rem;
 }
 
-#transactions-create .form-control {
+#transactions .form-control {
     min-width: 15rem;
 }
 
-#transactions-create form {
+#transactions form {
     margin-top: 30px;
 }
 
-#transactions-create form .form-group {
+#transactions form .form-group {
     margin-bottom: 16px;
     position: relative;
 }
 
-#transactions-create form .btn-group {
+#transactions form .btn-group {
     margin-top: 0;
     margin-bottom: 20px;
 }
